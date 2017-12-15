@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
        login: [ '', Validators.required ],
        email: [ '', Validators.required ],
        password: [ '', Validators.required ],
-       repearPassword: [ '', Validators.required ],
+       repeatPassword: [ '', Validators.required ],
        language: [ '', Validators.required ],
        phoneNumber: [ '', Validators.required ],
        birthDay: [ '', Validators.required ],

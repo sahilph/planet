@@ -2,57 +2,57 @@
 <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
   <table>
     <td><mat-form-field>
-      <input matInput placeholder="First Name" required>
+      <input matInput placeholder="First Name" formControlName="firstName"required>
     </mat-form-field></td>
     <td><mat-form-field>
-      <input matInput placeholder="Middle Name">
+      <input matInput placeholder="Middle Name" formControlName="middleName" required>
     </mat-form-field></td>
     <td><mat-form-field>
-      <input matInput placeholder="Last Name" required>
-    </mat-form-field></td>
-  </table>
-  <table>
-    <td><mat-form-field>
-      <input matInput placeholder="Login" required>
-    </mat-form-field></td>
-    <td><mat-form-field>
-      <input matInput placeholder="Password" required>
-    </mat-form-field></td>
-    <td><mat-form-field>
-      <input matInput placeholder="Re-enter password" required>
+      <input matInput placeholder="Last Name" formControlName="lastName" required>
     </mat-form-field></td>
   </table>
   <table>
     <td><mat-form-field>
-      <input matInput placeholder="Email" required>
+      <input matInput placeholder="Login" formControlName="login" required>
     </mat-form-field></td>
     <td><mat-form-field>
-      <input matInput placeholder="Language">
+      <input matInput placeholder="Password" formControlName="password" required>
     </mat-form-field></td>
     <td><mat-form-field>
-      <input matInput placeholder="Phone Number">
-    </mat-form-field></td>
-  </table>
-  <table>
-    <td><mat-form-field>
-      <input matInput placeholder="Birthday">
-    </mat-form-field></td>
-    <td><mat-form-field>
-      <input matInput placeholder="Gender">
-    </mat-form-field></td>
-    <td><mat-form-field>
-      <input matInput placeholder="Level" required>
+      <input matInput placeholder="Re-enter password" formControlName="repeatPassword" required>
     </mat-form-field></td>
   </table>
   <table>
     <td><mat-form-field>
-      <input matInput placeholder="Community">
+      <input matInput placeholder="Email" formControlName="email" required>
     </mat-form-field></td>
     <td><mat-form-field>
-      <input matInput placeholder="Region">
+      <input matInput placeholder="Language" formControlName="language">
     </mat-form-field></td>
     <td><mat-form-field>
-      <input matInput placeholder="Nation">
+      <input matInput placeholder="Phone Number" formControlName="Phone Number">
+    </mat-form-field></td>
+  </table>
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="Birthday" formControlName="birthday">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Gender" formControlName="gender">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Level"  formControlName="level"required>
+    </mat-form-field></td>
+  </table>
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="Community" formControlName="community">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Region" formControlName="region">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Nation" formControlName="nation">
     </mat-form-field></td>
   </table>
   <button type="submit" color="primary" i18n>Register</button>
