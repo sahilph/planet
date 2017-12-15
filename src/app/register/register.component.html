@@ -1,3 +1,60 @@
-<p>
-  register works!
-</p>
+<h3>Become a member</h3>
+<form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="First Name" required>
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Middle Name">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Last Name" required>
+    </mat-form-field></td>
+  </table>
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="Login" required>
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Password" required>
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Re-enter password" required>
+    </mat-form-field></td>
+  </table>
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="Email" required>
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Language">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Phone Number">
+    </mat-form-field></td>
+  </table>
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="Birthday">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Gender">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Level" required>
+    </mat-form-field></td>
+  </table>
+  <table>
+    <td><mat-form-field>
+      <input matInput placeholder="Community">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Region">
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Nation">
+    </mat-form-field></td>
+  </table>
+  <button type="submit" color="primary" i18n>Register</button>
+
+</form>

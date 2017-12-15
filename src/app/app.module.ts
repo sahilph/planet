@@ -12,14 +12,14 @@ import { AuthService } from './shared/auth-guard.service';
 import { UserService } from './shared/user.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule
   ],
   declarations: [
-    AppComponent, PageNotFoundComponent, RegisterComponent
+    AppComponent, PageNotFoundComponent
   ],
   providers: [
     CouchService, AuthService, UserService
