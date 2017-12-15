@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
        level: [ '', Validators.required ],
        community: [ '', Validators.required ],
        region: [ '', Validators.required ],
-       Nation: [ '', Validators.required ],
+       nation: [ '', Validators.required ],
 
      });
 
