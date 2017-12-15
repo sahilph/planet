@@ -13,11 +13,11 @@ import { CouchService } from '../../shared/couchdb.service';
 import { CustomValidators } from '../../validators/custom-validators';
 import { CourseValidatorService } from '../../validators/course-validator.service';
 import * as constants from '../constants';
+import { MatFormField, MatFormFieldControl } from '@angular/material';
 
 
 @Component({
-  templateUrl: 'courses-add.component.html',
-  styleUrls: [ 'courses-add.component.scss' ]
+  templateUrl: 'courses-add.component.html'
 })
 export class CoursesAddComponent {
   // needs member document to implement
@@ -112,7 +112,7 @@ export class CoursesAddComponent {
     // ...is the rest syntax for object destructuring
     try {
       await this.couchService.post(this.dbName, { ...courseInfo });
-      this.router.navigate([ '/' ]);
+      this.router.navigate([ '/courses' ]);
     } catch (err) {
       // Connect to an error display component to show user that an error has occurred
       console.log(err);
