@@ -11,6 +11,7 @@ import { MatRadioModule , MatFormFieldModule, MatButtonModule, MatInputModule } 
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+   educationLevel: Array<any>= [ 1, 2, 3, 4, 5, 6 , 7, 8, 9, 11, 12, 'Higher' ];
 
   constructor(
     private couchService: CouchService,

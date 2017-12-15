@@ -47,13 +47,22 @@
       <input matInput placeholder="Birthday" formControlName="birthDay" required>
       <mat-error><planet-form-error-messages [control]="registerForm.controls.birthDay"></planet-form-error-messages></mat-error>
     </mat-form-field></td>
-    <td><mat-form-field>
-      <input matInput placeholder="Gender" formControlName="gender" required>
+    <td>
+    <mat-form-field>
+    <mat-select placeholder="Gender" formControlName="gender" required>
+        <mat-option value="male">Male</mat-option>
+        <mat-option value="female">Female</mat-option>
       <mat-error><planet-form-error-messages [control]="registerForm.controls.gender"></planet-form-error-messages></mat-error>
-    </mat-form-field></td>
+    </mat-select>
+  </mat-form-field>
+  </td>
     <td><mat-form-field>
-      <input matInput placeholder="Level"  formControlName="level"required>
+    <mat-select placeholder="level">
+      <mat-option *ngFor="let level of educationLevel" [value]="level">
+        {{level}}
+      </mat-option>
       <mat-error><planet-form-error-messages [control]="registerForm.controls.level"></planet-form-error-messages></mat-error>
+      </mat-select>
     </mat-form-field></td>
   </table>
   <table>
@@ -71,5 +80,4 @@
     </mat-form-field></td>
   </table>
   <button type="submit"  mat-button color="primary" i18n>Register</button>
-
 </form>
