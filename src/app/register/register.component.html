@@ -57,7 +57,7 @@
   </mat-form-field>
   </td>
     <td><mat-form-field>
-    <mat-select placeholder="level">
+    <mat-select placeholder="level" formControlName="level">
       <mat-option *ngFor="let level of educationLevel" [value]="level">
         {{level}}
       </mat-option>
