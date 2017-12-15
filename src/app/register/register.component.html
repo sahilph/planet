@@ -44,7 +44,7 @@
   </table>
   <table>
     <td><mat-form-field>
-      <input matInput placeholder="Birthday" formControlName="birthDay" required>
+      <input matInput type="date" placeholder="Birthday" formControlName="birthDay" required>
       <mat-error><planet-form-error-messages [control]="registerForm.controls.birthDay"></planet-form-error-messages></mat-error>
     </mat-form-field></td>
     <td>
