@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CouchService } from '../shared/couchdb.service';
 import { FormsModule } from '@angular/forms';
 import { FormBuilder, FormControl, FormGroup, Validators, FormControlName } from '@angular/forms';
-import { MatRadioModule , MatFormFieldModule, MatButtonModule, MatInputModule } from '@angular/material';
+import { MatRadioModule , MatFormFieldModule, MatButtonModule, MatInputModule, MatGridListModule } from '@angular/material';
 
 @Component({
   selector: 'app-register',
@@ -11,12 +11,26 @@ import { MatRadioModule , MatFormFieldModule, MatButtonModule, MatInputModule } 
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-   educationLevel: Array<any>= [ 1, 2, 3, 4, 5, 6 , 7, 8, 9, 11, 12, 'Higher' ];
+   educationLevel = [ 1, 2, 3, 4, 5, 6 , 7, 8, 9, 11, 12, 'Higher' ];
+   birthmonths = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12 ];
+   birthyears = new Array(length);
+   birthdays = new Array();
+  length: number= new Date().getFullYear();
+  pwdMatch: String;
 
   constructor(
     private couchService: CouchService,
     private fg: FormBuilder
     ) {
+
+      for (let i = this.length; i > 1900; i--) {
+     this.birthyears.push(i);
+   }
+     for (let j = 1; j < 32; j++) {
+     this.birthdays.push(j);
+   }
+
+
      this.registerForm = fg.group({
        firstName: [ '', Validators.required ],
        middleName: [ '', Validators.required ],
@@ -27,12 +41,17 @@ export class RegisterComponent implements OnInit {
        repeatPassword: [ '', Validators.required ],
        language: [ '', Validators.required ],
        phoneNumber: [ '', Validators.required ],
-       birthDay: [ '', Validators.required ],
        gender: [ '', Validators.required ],
        level: [ '', Validators.required ],
        community: [ '', Validators.required ],
        region: [ '', Validators.required ],
        nation: [ '', Validators.required ],
+       birthDay: fg.group({
+         date: [ '' Validators.required ],
+         Month: [ '' Validators.required ],
+         Year: [ '' Validators.required ]
+
+       });
 
      });
 
@@ -41,7 +60,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
   registerUser(userInfo: any ) {
-    console.log(userInfo);
+    this.pwdMatch = '';
+   if (userInfo.password!= userInfo.repeatPassword) {
+    this.pwdMatch = 'Passwords do not Match';
+   }
+   else{
+   }
   }
-
 }
