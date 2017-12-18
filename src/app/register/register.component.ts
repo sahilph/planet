@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
      this.birthyears.push(i);
    }
      for (let j = 1; j < 32; j++) {
-     this.birthdays.push(j);
+    this.birthdays.push(j);
    }
 
 
@@ -46,10 +46,10 @@ export class RegisterComponent implements OnInit {
        community: [ '', Validators.required ],
        region: [ '', Validators.required ],
        nation: [ '', Validators.required ],
-       birthDay: fg.group({
-         date: [ '' Validators.required ],
-         Month: [ '' Validators.required ],
-         Year: [ '' Validators.required ]
+       birth: fg.group({
+         day: [ '' Validators.required ],
+         month: [ '' Validators.required ],
+         year: [ '' Validators.required ]
 
        });
 
@@ -65,6 +65,8 @@ export class RegisterComponent implements OnInit {
     this.pwdMatch = 'Passwords do not Match';
    }
    else{
+     console.log('hi');
+     console.log(userInfo);
    }
   }
 }

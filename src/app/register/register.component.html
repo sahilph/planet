@@ -44,10 +44,37 @@
   </table>
   <table>
 
-    <td><mat-form-field>
-      <input matInput type="date" placeholder="Birthday" formControlName="birthDay" required>
-      <mat-error><planet-form-error-messages [control]="registerForm.controls.birthDay"></planet-form-error-messages></mat-error>
-    </mat-form-field></td>
+    <td>
+    <table>
+        <div formGroupName="birth">
+      <mat-form-field  >
+
+    <mat-select placeholder="Date" formControlName="day">
+          <mat-option *ngFor="let d of  birthdays" [value]="d">
+            {{d}}
+          </mat-option>
+          <mat-error><planet-form-error-messages [control]="registerForm.controls.birth.date"></planet-form-error-messages></mat-error>
+        </mat-select>
+         </mat-form-field>
+    <mat-form-field>
+  <mat-select placeholder="Month" formControlName="month">
+          <mat-option *ngFor="let m of  birthmonths" [value]="m">
+            {{m}}
+          </mat-option>
+          <mat-error><planet-form-error-messages [control]="registerForm.controls.birth.date"></planet-form-error-messages></mat-error>
+        </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+  <mat-select placeholder="Year" formControlName="year">
+          <mat-option *ngFor="let y of  birthyears" [value]="y">
+            {{y}}
+          </mat-option>
+          <mat-error><planet-form-error-messages [control]="registerForm.controls.birth.year"></planet-form-error-messages></mat-error>
+        </mat-select>
+  </mat-form-field>
+</div>
+    </table>
+    </td>
 
     <td>
       <td>
@@ -85,5 +112,39 @@
     <div *ngIf="pwdMatch"><mat-error>{{pwdMatch}}</mat-error></div>
     <button type="submit"  mat-button color="primary" i18n>Register</button>
   </form>
+<h3>Become a member</h3>
+<form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
+  <table>
+    <td>
+      <div>
+
+      </div>
+    </td>
+    <td><mat-form-field>
+      <input matInput placeholder="Middle Name" formControlName="middleName" required>
+      <mat-error><planet-form-error-messages [control]="registerForm.controls.middleName"></planet-form-error-messages></mat-error>
+    </mat-form-field></td>
+    <td><mat-form-field>
+      <input matInput placeholder="Last Name" formControlName="lastName" required>
+      <mat-error><planet-form-error-messages [control]="registerForm.controls.LastName"></planet-form-error-messages></mat-error>
+    </mat-form-field></td>
+  </table>
+
+
+
+
+
+
+    <div *ngIf="pwdMatch"><mat-error>{{pwdMatch}}</mat-error></div>
+    <button type="submit"  mat-button color="primary" i18n>Register</button>
+  </form>
+
+
+     <mat-grid-list cols="2" rowHeight="100px">
+  <mat-grid-tile> Hi
+    <div></div>
+  </mat-grid-tile>
+  <mat-grid-tile>two</mat-grid-tile>
+  </mat-grid-list>
 
 
