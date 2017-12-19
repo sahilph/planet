@@ -45,8 +45,7 @@
   <table>
 
     <td>
-    <table>
-        <div formGroupName="birth">
+           <div formGroupName="birth">
       <mat-form-field  >
 
     <mat-select placeholder="Date" formControlName="day">
@@ -73,7 +72,7 @@
         </mat-select>
   </mat-form-field>
 </div>
-    </table>
+
     </td>
 
     <td>
@@ -112,39 +111,3 @@
     <div *ngIf="pwdMatch"><mat-error>{{pwdMatch}}</mat-error></div>
     <button type="submit"  mat-button color="primary" i18n>Register</button>
   </form>
-<h3>Become a member</h3>
-<form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
-  <table>
-    <td>
-      <div>
-
-      </div>
-    </td>
-    <td><mat-form-field>
-      <input matInput placeholder="Middle Name" formControlName="middleName" required>
-      <mat-error><planet-form-error-messages [control]="registerForm.controls.middleName"></planet-form-error-messages></mat-error>
-    </mat-form-field></td>
-    <td><mat-form-field>
-      <input matInput placeholder="Last Name" formControlName="lastName" required>
-      <mat-error><planet-form-error-messages [control]="registerForm.controls.LastName"></planet-form-error-messages></mat-error>
-    </mat-form-field></td>
-  </table>
-
-
-
-
-
-
-    <div *ngIf="pwdMatch"><mat-error>{{pwdMatch}}</mat-error></div>
-    <button type="submit"  mat-button color="primary" i18n>Register</button>
-  </form>
-
-
-     <mat-grid-list cols="2" rowHeight="100px">
-  <mat-grid-tile> Hi
-    <div></div>
-  </mat-grid-tile>
-  <mat-grid-tile>two</mat-grid-tile>
-  </mat-grid-list>
-
-
