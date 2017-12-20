@@ -11,19 +11,37 @@ import { MatRadioModule , MatFormFieldModule, MatButtonModule, MatInputModule } 
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  educationLevel: Array<any>= [ 1, 2, 3, 4, 5, 6 , 7, 8, 9, 11, 12, 'Higher' ];
-  RegistrationMsg: String;
+   educationLevel: Array<any>= [ 1, 2, 3, 4, 5, 6 , 7, 8, 9, 11, 12, 'Higher' ];
 
   constructor(
     private couchService: CouchService,
     private fg: FormBuilder
     ) {
-    this.createform();
+     this.registerForm = fg.group({
+       firstName: [ '', Validators.required ],
+       middleName: [ '', Validators.required ],
+       lastName: [ '', Validators.required ],
+       login: [ '', Validators.required ],
+       email: [ '', Validators.required ],
+       password: [ '', Validators.required ],
+       repeatPassword: [ '', Validators.required ],
+       language: [ '', Validators.required ],
+       phoneNumber: [ '', Validators.required ],
+       birthDay: [ '', Validators.required ],
+       gender: [ '', Validators.required ],
+       level: [ '', Validators.required ],
+       community: [ '', Validators.required ],
+       region: [ '', Validators.required ],
+       nation: [ '', Validators.required ],
+
+     });
+
   }
 
   ngOnInit() {
   }
   registerUser(userInfo: any ) {
+<<<<<<< HEAD
     this.RegistrationMsg = '';
     if (userInfo.password === userInfo.repeatPassword) {
       this.RegistrationMsg = '';
@@ -59,34 +77,9 @@ export class RegisterComponent implements OnInit {
   }, (error) => {
     return false; // user doesn't have permission so there is an admin
   });
+=======
+    console.log(userInfo);
+>>>>>>> parent of e686c8fd... cleaned up
   }
 
-  createAdmin(userData) {
-    this.couchService.put('_node/nonode@nohost/_config/admins/' + userData.login, userData.password).then((data) => {
-      this.RegistrationMsg = 'Your registration is successful';
-    }, (error) => {
-      this.RegistrationMsg = 'Sorry, something went wrong';
-    });
-  }
-
-  createform() {
-    this.registerForm = this.fg.group({
-      firstName: [ '', Validators.required ],
-      middleName: [ '', Validators.required ],
-      lastName: [ '', Validators.required ],
-      login: [ '', Validators.required ],
-      email: [ '', Validators.required ],
-      password: [ '', Validators.required ],
-      repeatPassword: [ '', Validators.required ],
-      language: [ '', Validators.required ],
-      phoneNumber: [ '', Validators.required ],
-      birthDay: [ '', Validators.required ],
-      gender: [ '', Validators.required ],
-      level: [ '', Validators.required ],
-      community: [ '', Validators.required ],
-      region: [ '', Validators.required ],
-      nation: [ '', Validators.required ],
-
-    });
-  }
 }

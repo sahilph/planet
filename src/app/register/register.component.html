@@ -75,8 +75,14 @@
     <mat-form-field>
       <input matInput placeholder="Nation" formControlName="nation" required>
       <mat-error><planet-form-error-messages [control]="registerForm.controls.nation"></planet-form-error-messages></mat-error>
+<<<<<<< HEAD
     </mat-form-field>
   </mat-grid-list>
   <div *ngIf="RegistrationMsg"> <mat-error> {{RegistrationMsg}} </mat-error></div>
   <button type="submit"  mat-button [disabled]="registerForm.invalid" color="primary" i18n>Register</button>
+=======
+    </mat-form-field></td>
+  </table>
+  <button type="submit"  mat-button color="primary" i18n>Register</button>
+>>>>>>> parent of e686c8fd... cleaned up
 </form>
