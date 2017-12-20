@@ -25,5 +25,9 @@ $primary: mat-color($planet-app-primary, $primary-hue);
 $accent: mat-color($planet-app-accent, $accent-hue);
 $primary-text: mat-contrast($planet-primary, $primary-hue);
 $accent-text: mat-contrast($planet-accent, $accent-hue);
+<<<<<<< HEAD
+=======
+$grey: mat-color($mat-grey, 400);
+>>>>>>> 7a9d14669fae0f6573e2988a4f4b5f4832e881c5
 
 @include angular-material-theme($planet-app-theme);

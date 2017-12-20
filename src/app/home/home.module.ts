@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { JsonpModule, Jsonp, Response } from '@angular/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
@@ -11,7 +11,7 @@ import { UsersComponent } from '../users/users.component';
 import { HomeRouterModule } from './home-router.module';
 import { CommunityComponent } from '../community/community.component';
 import { PlanetFormsModule } from '../shared/planet-forms.module';
-import { NationValidatorService } from '../validators/nation-validator.service';
+
 import { NationComponent } from '../nation/nation.component';
 import { MaterialModule } from '../shared/material.module';
 import { PlanetDialogsModule } from '../shared/dialogs/planet-dialogs.module';
@@ -27,7 +27,8 @@ import { RegisterComponent } from '../register/register.component';
     PlanetFormsModule,
     MaterialModule,
     PlanetDialogsModule,
-    JsonpModule
+    HttpClientModule,
+    HttpClientJsonpModule
   ],
   declarations: [
     HomeComponent,
@@ -36,9 +37,14 @@ import { RegisterComponent } from '../register/register.component';
     UsersComponent,
     CommunityComponent,
     NationComponent,
+<<<<<<< HEAD
     ManagerDashboardComponent,
     RegisterComponent
   ],
   providers: [ NationValidatorService ]
+=======
+    ManagerDashboardComponent
+  ]
+>>>>>>> 7a9d14669fae0f6573e2988a4f4b5f4832e881c5
 })
 export class HomeModule {}

@@ -25,7 +25,10 @@
     "@angular/compiler": "^5.1.0",
     "@angular/core": "^5.1.0",
     "@angular/forms": "^5.1.0",
+<<<<<<< HEAD
     "@angular/http": "^5.1.0",
+=======
+>>>>>>> 7a9d14669fae0f6573e2988a4f4b5f4832e881c5
     "@angular/material": "^5.0.1",
     "@angular/platform-browser": "^5.1.0",
     "@angular/platform-browser-dynamic": "^5.1.0",
