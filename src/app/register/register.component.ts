@@ -42,6 +42,7 @@ export class RegisterComponent implements OnInit {
   }
   registerUser(userInfo: any ) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.RegistrationMsg = '';
     if (userInfo.password === userInfo.repeatPassword) {
       this.RegistrationMsg = '';
@@ -77,6 +78,9 @@ export class RegisterComponent implements OnInit {
   }, (error) => {
     return false; // user doesn't have permission so there is an admin
   });
+=======
+    console.log(userInfo);
+>>>>>>> parent of e686c8fd... cleaned up
 =======
     console.log(userInfo);
 >>>>>>> parent of e686c8fd... cleaned up

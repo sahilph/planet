@@ -37,14 +37,9 @@ import { RegisterComponent } from '../register/register.component';
     UsersComponent,
     CommunityComponent,
     NationComponent,
-<<<<<<< HEAD
     ManagerDashboardComponent,
     RegisterComponent
-  ],
-  providers: [ NationValidatorService ]
-=======
-    ManagerDashboardComponent
   ]
->>>>>>> 7a9d14669fae0f6573e2988a4f4b5f4832e881c5
+
 })
 export class HomeModule {}
