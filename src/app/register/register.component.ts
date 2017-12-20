@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     .then((data) => {
       this.RegistrationMsg = 'Your registration is successful';
     }, (error) => {
-      this.RegistrationMsg = 'Sorry, something went wrong';
+      this.RegistrationMsg = 'Error, something went wrong';
     });
   }
 
