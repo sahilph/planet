@@ -104,6 +104,7 @@ insert_docs nations ./design/nations/nations-mockup.json
 insert_docs meetups ./design/meetups/meetups-mockup.json
 insert_docs courses ./design/courses/courses-mockup.json
 insert_docs resources ./design/resources/resources-mockup.json
+insert_docs ratings ./design/ratings/ratings-mockup.json
 insert_attachments resources ./design/resources/resources-attachment-mockup.json
 # Add permission in databases
 multi_db_update ./design/security-update/security-update.json _security
