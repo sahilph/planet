@@ -70,7 +70,7 @@ script:
   - i=$(curl -X GET http://127.0.0.1:5984/_all_dbs | jq length); if [ $i -ne 12 ];
     then exit 1; fi
   #- node -v
-  #- ng test
+  - ng test
   - ng e2e --environment test
   - ./deploy/ngbuildprod.sh # ng build --prod
 before_deploy:
