@@ -6,12 +6,15 @@ import { CustomValidators } from '../validators/custom-validators';
 import { MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'planet-configuration',
   templateUrl: './configuration.component.html'
 })
 export class ConfigurationComponent implements OnInit {
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
+  private defaultOpts = { headers: this.headers, withCredentials: true };
   @ViewChild('stepper') stepper: MatStepper;
   nationOrCommunity = 'community';
   message = '';
@@ -24,7 +27,8 @@ export class ConfigurationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private couchService: CouchService,
     private validatorService: ValidatorService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -70,12 +74,13 @@ export class ConfigurationComponent implements OnInit {
   }
 
   getNationList() {
-    this.couchService.get('nations/_all_docs?include_docs=true')
-      .subscribe((data) => {
-        this.nations = data.rows.map(nations => {
+    this.http.jsonp('http://nbs.ole.org:5997' + '/nations/_all_docs?include_docs=true&callback=JSONP_CALLBACK', 'callback')
+      .debug('jsonp request to external nation')
+      .subscribe((res: any) => {
+        this.nations = res.rows.map(nations => {
           return nations.doc;
         }).filter(nt  => {
-          return nt['_id'].indexOf('_design') !== 0;
+          return nt['_id'].indexOf('_design/bell') !== 0;
         });
       }, (error) => this.message = 'There was a problem getting NationList');
   }
@@ -112,6 +117,11 @@ export class ConfigurationComponent implements OnInit {
             console.log(err);
           });
         }, (error) => (error));
+      if (this.configurationFormGroup.value.planet_type === 'community') {
+        this.http.put('http://' + this.configurationFormGroup.value.parent_domain + '/_users/org.couchdb.user:' + this.loginForm.value.username,
+          { 'name': this.loginForm.value.username, 'password': this.loginForm.value.password, 'roles': [], 'type': 'user', 'isUserAdmin': false }, this.defaultOpts)
+          .subscribe((data) => console.log(data)), (error) => (error);
+      }
     }
   }
 
