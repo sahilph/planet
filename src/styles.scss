@@ -6,7 +6,7 @@ body {
   margin: 0;
 
   .gradient-background {
-    background: linear-gradient(to bottom, #000000, $primary);
+    background: darken(mat-color($planet-app-primary, $primary-hue), 35%);
   }
 
   a,

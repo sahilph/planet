@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       .findIndex((route) => this.router.url.indexOf(route) > -1) > -1;
     const isRoute = routesWithBackground
       .findIndex((route) => this.router.url.indexOf(route) > -1) > -1;
-    return isRoute && !isException;
+    return isRoute && !isException ? 'gradient-background' : '';
   }
 
   toggleNav() {
@@ -128,6 +128,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.couchService.put('notifications/' + notification._id, update_notificaton).subscribe((data) => {
       console.log(data);
     },  (err) => console.log(err));
+  }
+
+  // Sets a theme class for the main content based on the route
+  subTheme() {
+    const themeMatch = { 'resources': 'library', 'courses': 'courses', 'meetups': 'meetups', 'users': 'teams' };
+    let style = '';
+    for (const route in themeMatch) {
+      if (themeMatch.hasOwnProperty(route) && this.router.url.indexOf(route) > -1) {
+        style = 'planet-' + themeMatch[route] + '-theme';
+      }
+    }
+    return style;
   }
 
 }

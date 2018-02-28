@@ -11,21 +11,26 @@
 
 // Create sub-themes for the different sections which change the accent color.
 $accent-map: (
-  library: mat-palette($mat-pink, $accent-hue),
-  courses: mat-palette($mat-orange, $accent-hue),
-  meetups: mat-palette($mat-purple, $accent-hue),
-  teams: mat-palette($mat-green, $accent-hue)
+  library: mat-palette($mat-pink, $primary-hue),
+  courses: mat-palette($mat-deep-orange, $primary-hue),
+  meetups: mat-palette($mat-purple, $primary-hue),
+  teams: mat-palette($mat-green, $primary-hue)
 );
 
 @each $section in library, courses, meetups, teams {
-  $accent-palette: map-get($accent-map, #{$section});
-  $theme: mat-light-theme($planet-app-primary, $accent-palette, $planet-app-warn);
+  $section-palette: map-get($accent-map, #{$section});
+  $theme: mat-light-theme($section-palette, $planet-app-accent, $planet-app-warn);
   .planet-#{$section}-theme {
     @include angular-material-theme($theme);
 
-    .accent-color {
-      background-color: mat-color($accent-palette, $accent-hue);
-      color: mat-contrast($accent-palette, $accent-hue);
+    .primary-color {
+      background-color: mat-color($section-palette, $primary-hue);
+      color: mat-contrast($section-palette, $primary-hue);
     }
   }
+
+  .planet-#{$section}-theme.gradient-background {
+    background: darken(mat-color($section-palette, $primary-hue), 35%);
+  }
+
 }

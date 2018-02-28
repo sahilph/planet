@@ -84,7 +84,7 @@
       </li>
     </ul>
   </mat-sidenav>
-  <mat-sidenav-content [ngClass]="{'gradient-background': backgroundRoute()}">
+  <mat-sidenav-content [ngClass]="[ subTheme(), backgroundRoute() ]">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
