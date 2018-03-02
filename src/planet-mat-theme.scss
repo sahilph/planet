@@ -30,7 +30,7 @@ $accent-map: (
   }
 
   .planet-#{$section}-theme.gradient-background {
-    background: darken(mat-color($section-palette, $primary-hue), 35%);
+    background: change-color(mat-color($section-palette, $primary-hue), $lightness: 20%);
   }
 
 }
