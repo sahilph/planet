@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CouchService } from '../shared/couchdb.service';
 import { DialogsPromptComponent } from '../shared/dialogs/dialogs-prompt.component';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
@@ -10,8 +9,6 @@ import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 export class CommunityComponent implements OnInit, AfterViewInit {
   message = '';
   communities = new MatTableDataSource();
-  selectedValue = '';
-  selectedNation = '';
   nations = [];
   displayedColumns = [ 'name',
     'lastAppUpdateDate',
@@ -28,25 +25,11 @@ export class CommunityComponent implements OnInit, AfterViewInit {
 
   constructor(
     private couchService: CouchService,
-    private dialog: MatDialog,
-    private route: ActivatedRoute
+    private dialog: MatDialog
   ) {}
 
   ngAfterViewInit() {
     this.communities.paginator = this.paginator;
-  }
-
-  getNationList() {
-    this.couchService.get('nations/_all_docs?include_docs=true')
-      .subscribe((data) => {
-        this.nations = data.rows.map(function(nt){
-          if (nt.doc.name === this.route.snapshot.paramMap.get('nation')) {
-            this.selectedNation = nt.doc.nationurl;
-            this.communities.filter = this.selectedNation;
-          }
-          return nt;
-        }, this);
-      }, (error) => this.message = 'There was a problem getting NationList');
   }
 
   getCommunityList() {
@@ -130,16 +113,7 @@ export class CommunityComponent implements OnInit, AfterViewInit {
     };
   }
 
-  onChange(filterValue: string) {
-    this.communities.filter = filterValue;
-  }
-
-  onSelect(select: string) {
-    this.communities.filter = select;
-  }
-
   ngOnInit() {
-    this.getNationList();
     this.getCommunityList();
   }
 
