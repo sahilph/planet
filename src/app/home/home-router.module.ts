@@ -12,11 +12,11 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'users', loadChildren: '../users/users.module#UsersModule' },
-      { path: 'nation', component: NationComponent },
+      { path: 'associated/:planet/:nation', component: NationComponent },
+      { path: 'associated/:planet', component: NationComponent },
       { path: 'manager', component: ManagerDashboardComponent },
       { path: 'courses', loadChildren: '../courses/courses.module#CoursesModule' },
-      { path: 'community', component: CommunityComponent },
-      { path: 'community/:nation', component: CommunityComponent },
+      { path: 'requests', component: CommunityComponent },
       { path: 'resources', loadChildren: '../resources/resources.module#ResourcesModule' },
       { path: 'meetups', loadChildren: '../meetups/meetups.module#MeetupsModule' }
     ]
