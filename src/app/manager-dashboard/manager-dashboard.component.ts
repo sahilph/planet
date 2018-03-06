@@ -16,7 +16,7 @@ export class ManagerDashboardComponent implements OnInit {
   isUserAdmin = false;
   displayDashboard = true;
   message = '';
-  planet_type = [];
+  planet_type = '';
   constructor(
     private couchService: CouchService,
     private userService: UserService
