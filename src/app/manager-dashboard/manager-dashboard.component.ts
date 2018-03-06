@@ -17,7 +17,10 @@ export class ManagerDashboardComponent implements OnInit {
   displayDashboard = true;
   message = '';
   planet_type = [];
-  constructor(private couchService: CouchService) {}
+  constructor(
+    private couchService: CouchService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     Object.assign(this, this.userService.get());
