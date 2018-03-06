@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   sidenavState = 'closed';
   notifications = [];
   @ViewChild('content') private mainContent;
+  isUserAdmin = false;
 
   // Sets the margin for the main content to match the sidenav width
   animObs = interval(15).debug('Menu animation').pipe(tap(() => {
@@ -69,7 +70,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   // Used to swap in different background.
   // Should remove when background is finalized.
   backgroundRoute() {
-    const routesWithBackground = [ 'resources', 'courses', 'users' ];
+    const routesWithBackground = [ 'resources', 'courses', 'users', 'meetups' ];
     // Leaving the exception variable in so we can easily use this while still testing backgrounds
     const routesWithoutBackground = [ 'users/update', 'users/profile' ];
     const isException = routesWithoutBackground
