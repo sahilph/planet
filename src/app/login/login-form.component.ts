@@ -78,6 +78,10 @@ export class LoginFormComponent {
         // Post new session info to login_activity
         return this.userService.newSessionLog();
       })).subscribe((res) => {
+        this.couchService.post('_session', { 'name': name.toLowerCase(), 'password': password }, { withCredentials: true }, this.userService.getConfig().parent_domain)
+          .subscribe((response) => {
+            console.log('Success');
+          }, (error) => console.log('Error'));
         if (isCreate) {
           this.router.navigate( [ 'users/update/' + name.toLowerCase() ]);
         } else {
