@@ -10,13 +10,12 @@ export class CommunityComponent implements OnInit, AfterViewInit {
   message = '';
   communities = new MatTableDataSource();
   nations = [];
-  displayedColumns = [ 'name',
-    'lastAppUpdateDate',
-    'version',
-    'nationName',
-    'lastPublicationsSyncDate',
-    'lastActivitiesSyncDate',
-    'registrationRequest',
+  displayedColumns = [
+    'name',
+    'code',
+    'language',
+    'url',
+    'status',
     'action'
   ];
   editDialog: any;
@@ -75,6 +74,7 @@ export class CommunityComponent implements OnInit, AfterViewInit {
           }, (error) => this.editDialog.componentInstance.message = 'There was a problem accepting this community');
       }
       if (change === 'accept') {
+        community.registrationRequest = 'accepted';
         this.couchService.get('_users/_all_docs?include_docs=true')
           .subscribe((data) => {
             data.rows.map(data => {
@@ -86,6 +86,7 @@ export class CommunityComponent implements OnInit, AfterViewInit {
                     delete community['_id'];
                     delete community['_rev'];
                     this.couchService.post('nations', { ...community }).subscribe(() => {
+                      const { _id: id, _rev: rev } = community;
                       this.couchService.delete('communityregistrationrequests/' + communityId + '?rev=' + communityRev)
                       .subscribe((data) => {
                         this.communities.data = this.communities.data.filter((comm: any) => data.id !== comm._id);
