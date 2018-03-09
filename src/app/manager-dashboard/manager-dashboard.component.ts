@@ -16,7 +16,7 @@ export class ManagerDashboardComponent implements OnInit {
   isUserAdmin = false;
   displayDashboard = true;
   message = '';
-  planet_type = '';
+  planet_type = this.userService.getConfig().planet_type;
   constructor(
     private couchService: CouchService,
     private userService: UserService
@@ -29,10 +29,6 @@ export class ManagerDashboardComponent implements OnInit {
       this.displayDashboard = false;
       this.message = 'Access restricted to admins';
     }
-    this.couchService.get('configurations/_all_docs?include_docs=true')
-      .subscribe((response) => {
-        this.planet_type = response.rows[0].doc.planet_type;
-      }, (error) => console.log('Error'));
   }
 
 }
