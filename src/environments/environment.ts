@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   test: false,
   couchAddress: 'http://127.0.0.1:2200/',
-  centerAddress: 'earth.np.ole.org:5986'
+  centerAddress: '192.168.2.1:2201'
 };
