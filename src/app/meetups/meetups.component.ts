@@ -146,4 +146,9 @@ export class MeetupsComponent implements OnInit, AfterViewInit {
     this.meetups.filterPredicate = filterSpecificFields([ 'title', 'description' ]);
   }
 
+  updateMeetup(meetup) {
+    const { _id: meetupId } = meetup;
+    this.router.navigate([ '/meetups/update/' + meetup._id ]);
+  }
+
 }
