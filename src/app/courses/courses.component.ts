@@ -8,7 +8,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { filterSpecificFields } from '../shared/table-helpers';
-import { UserService } from '../shared/user.service';
 @Component({
   templateUrl: './courses.component.html',
   styles: [ `
@@ -152,7 +151,7 @@ export class CoursesComponent implements OnInit, AfterViewInit {
     this.courses.data.forEach(row => this.selection.select(row));
   }
 
-  toggleResign(course, courseId) {
+  toggleResign(course) {
     if (course.resign === undefined) {
       // Resign does not exist
       course.resign = true;
@@ -160,9 +159,10 @@ export class CoursesComponent implements OnInit, AfterViewInit {
       // Resign already exists
       course.resign = !course.resign;
     }
-    this.couchService.put('courses/' + courseId, course)
+    this.couchService.put('courses/' + course._id, course)
       .subscribe((response) => {
         console.log('Success!');
+        this.router.navigate([ '/' ]);
       }, (error) => {
       console.log('Error!');
     });
