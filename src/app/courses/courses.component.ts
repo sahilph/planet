@@ -8,6 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { filterSpecificFields } from '../shared/table-helpers';
+import { UserService } from '../shared/user.service';
 @Component({
   templateUrl: './courses.component.html',
   styles: [ `
@@ -37,7 +38,8 @@ export class CoursesComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private planetMessageService: PlanetMessageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -151,13 +153,9 @@ export class CoursesComponent implements OnInit, AfterViewInit {
     this.courses.data.forEach(row => this.selection.select(row));
   }
 
-  toggleResign(course) {
-    if (course.resign === undefined) {
-      // Resign does not exist
-      course.resign = true;
-    }  else {
-      // Resign already exists
-      course.resign = !course.resign;
+  courseAdmission(course) {
+    if (course.members  === undefined || course.members.length > 0 ) {
+      course.members.push(this.userService.get()._id);
     }
     this.couchService.put('courses/' + course._id, course)
       .subscribe((response) => {
@@ -166,6 +164,19 @@ export class CoursesComponent implements OnInit, AfterViewInit {
       }, (error) => {
       console.log('Error!');
     });
+  }
+
+  courseResign(course) {
+    const user = this.userService.get()._id;
+    const index = course.members.indexOf(user);
+    course.members.splice(index, 1);
+    this.couchService.put('courses/' + course._id, course)
+    .subscribe((response) => {
+      console.log('Success!');
+      this.router.navigate([ '/' ]);
+    }, (error) => {
+    console.log('Error!');
+  });
   }
 
 }

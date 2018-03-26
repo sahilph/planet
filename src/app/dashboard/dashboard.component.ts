@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
   filterResigned(res) {
     res.forEach(course => {
-      if (!course.resign) {
+      if (course.members) {
         this.courseArray.push(course);
       }
     });
