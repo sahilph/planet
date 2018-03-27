@@ -65,11 +65,6 @@ export class MeetupsComponent implements OnInit, AfterViewInit {
 
   getMeetups() {
     return this.couchService.get('meetups/_all_docs?include_docs=true');
-      // .subscribe((data) => {
-      //   // _all_docs returns object with rows array of objects with 'doc' property that has an object with the data.
-      //   // Map over data.rows to remove the 'doc' property layer
-      //   this.meetups.data = data.rows.map(meetup => meetup.doc);
-      // }, (error) => this.planetMessageService.showAlert('There was a problem getting meetups'));
   }
 
   deleteClick(meetup) {
@@ -188,6 +183,8 @@ export class MeetupsComponent implements OnInit, AfterViewInit {
         (memberId.indexOf(username) > -1) ? memberId.splice(memberId.indexOf(username), 1) : memberId.push(username);
         return this.couchService.put('usermeetups/' + meetupInfo._id , { ...meetupInfo, memberId });
       })).subscribe((res) => {
+        const msg = meetup.participate ? 'join' : 'left';
+        this.planetMessageService.showAlert('You have ' + msg + ' selected meetup.');
         const mData = this.meetups.data;
         if (mData.length > 0) {
           for (let i = 0; i < mData.length; i++ ) {
