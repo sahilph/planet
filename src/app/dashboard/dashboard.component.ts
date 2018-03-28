@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { findDocuments } from '../shared/mangoQueries';
 import { UserService } from '../shared/user.service';
 import { CouchService } from '../shared/couchdb.service';
-
-import { map } from 'rxjs/operators';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { map, switchMap  } from 'rxjs/operators';
 
 // Main page once logged in.  At this stage is more of a placeholder.
 @Component({
@@ -35,8 +35,8 @@ export class DashboardComponent implements OnInit {
     this.getData('resources', { linkPrefix: 'resources/view/', addId: true }).subscribe((res) => {
       this.data.resources = res;
     });
-    this.getData('courses', { linkPrefix: 'courses', titleField: 'courseTitle' }). subscribe((res) => {
-      this.data.courses = this.filterResigned(res);
+    forkJoin(this.myCourse()).subscribe((res) => {
+      this.data.courses = res[0];
     });
     this.getData('meetups', { linkPrefix: 'meetups' }). subscribe((res) => {
       this.data.meetups = res;
@@ -45,18 +45,21 @@ export class DashboardComponent implements OnInit {
 
   getData(db: string, { linkPrefix, addId = false, titleField = 'title' }) {
     return this.couchService.get(db + '/_all_docs?include_docs=true').pipe(map((response) => {
-      // Sets data, adding the text to display in the dashboard as the 'title' field and
-      // link with or without doc id based on addId
+    // Sets data, adding the text to display in the dashboard as the 'title' field and
+    // link with or without doc id based on addId
       return response.rows.map((item) => ({ ...item.doc, title: item.doc[titleField], link: linkPrefix + (addId ? item.id : '') }));
-    }));
+      }));
+    }
+
+  myCourse() {
+    return this.couchService.post(`courses/_find`,
+      findDocuments({ 'members':  {'$in': [
+        this.userService.get()._id
+        ]} }, 0 ))
+      .pipe(
+        map((resopnse => {
+          return resopnse.docs.map((item) => ({ ...item,  title: item.courseTitle, link: 'courses/view/' + item._id  }));
+        })));
   }
 
-  filterResigned(res) {
-    res.forEach(course => {
-      if (course.members) {
-        this.courseArray.push(course);
-      }
-    });
-    return this.courseArray;
-  }
 }
