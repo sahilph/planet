@@ -55,16 +55,16 @@ export class ResourcesAddComponent implements OnInit {
 
   ngOnInit() {
     this.userDetail = this.userService.get();
-        // update resource url check
+    // update resource url check
     if (this.route.snapshot.url[0].path === 'update') {
       this.couchService.get('resources/' + this.route.snapshot.paramMap.get('id'))
-      .subscribe((data) => {
-        this.revision = data._rev;
-        // this.fileName = (data.hasOwnProperty('_attachments')) ? data._attachments[0] : '';
-        this.resourceForm.patchValue(data);
-      }, (error) => {
-        console.log(error);
-      });
+        .subscribe((data) => {
+          this.revision = data._rev;
+          // this.fileName = (data.hasOwnProperty('_attachments')) ? data._attachments[0] : '';
+          this.resourceForm.patchValue(data);
+        }, (error) => {
+          console.log(error);
+        });
     }
 
   }
@@ -76,8 +76,8 @@ export class ResourcesAddComponent implements OnInit {
         Validators.required,
         // an arrow function is for lexically binding 'this' otherwise 'this' would be undefined
         this.route.snapshot.url[0].path === 'update'
-       ?  ac => this.validatorService.isNameAvailible$(this.dbName, 'title', ac, this.route.snapshot.params.id)
-       : ac => this.validatorService.isUnique$(this.dbName, 'title', ac)
+          ? ac => this.validatorService.isNameAvailible$(this.dbName, 'title', ac, this.route.snapshot.params.id)
+          : ac => this.validatorService.isUnique$(this.dbName, 'title', ac)
       ],
       author: '',
       year: '',
@@ -101,13 +101,13 @@ export class ResourcesAddComponent implements OnInit {
 
   // Function which takes a MIME Type as a string and returns whether the file is an
   // image, audio file, video, pdf, or zip.  If none of those five returns 'other'
-  private simpleMediaType (mimeType: string) {
+  private simpleMediaType(mimeType: string) {
     const mediaTypes = [ 'image', 'pdf', 'audio', 'video', 'zip' ];
     return mediaTypes.find((type) => mimeType.indexOf(type) > -1) || 'other';
   }
 
   // Creates an observer which reads one file then outputs its data
-  private fileReaderObs (file, mediaType) {
+  private fileReaderObs(file, mediaType) {
     const reader = new FileReader();
     const obs = Observable.create((observer) => {
       reader.onload = () => {
@@ -132,7 +132,7 @@ export class ResourcesAddComponent implements OnInit {
   }
 
   updateResource(resourceInfo) {
-    this.couchService.put(this.dbName + '/' + this.id, { ...resourceInfo, '_rev': this.revision  }).subscribe(() => {
+    this.couchService.put(this.dbName + '/' + this.id, { ...resourceInfo, '_rev': this.revision }).subscribe(() => {
       this.router.navigate([ '/resources' ]);
       this.planetMessageService.showMessage('Resource Updated Successfully');
     }, (err) => {
@@ -187,8 +187,8 @@ export class ResourcesAddComponent implements OnInit {
 
   // Returns a function which takes a file name located in the zip file and returns an observer
   // which resolves with the file's data
-  private processZip (zipFile) {
-    return function(fileName) {
+  private processZip(zipFile) {
+    return function (fileName) {
       return Observable.create((observer) => {
         // When file was not read error block wasn't called from async so added try...catch block
         try {
@@ -244,6 +244,10 @@ export class ResourcesAddComponent implements OnInit {
 
   bindFile(event) {
     this.file = event.target.files[0];
+  }
+
+  revertDate(date) {
+
   }
 
 }
