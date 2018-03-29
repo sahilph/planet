@@ -30,7 +30,7 @@ export class ResourcesAddComponent implements OnInit {
   media: string[];
   openWith: string[];
   resourceType: string[];
-  currentDate = new Date(); // might be forced to change date format using "toISOString().split('T')[0]"
+  currentDate = new Date();
   file: any;
   resourceForm: FormGroup;
   readonly dbName = 'resources'; // make database name a constant
@@ -60,9 +60,7 @@ export class ResourcesAddComponent implements OnInit {
       this.couchService.get('resources/' + this.route.snapshot.paramMap.get('id'))
       .subscribe((data) => {
         this.revision = data._rev;
-        this.id = data._id;
-        data.articleDate = new Date(data.articleDate); // convert epoch back to date
-        this.fileName = (data.hasOwnProperty('_attachments')) ? data._attachments[0] : '';
+        // this.fileName = (data.hasOwnProperty('_attachments')) ? data._attachments[0] : '';
         this.resourceForm.patchValue(data);
       }, (error) => {
         console.log(error);
@@ -98,7 +96,6 @@ export class ResourcesAddComponent implements OnInit {
       openUrl: [],
       openWhichFile: '',
       isDownloadable: '',
-      filename: ''
     });
   }
 
