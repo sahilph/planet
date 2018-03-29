@@ -18,6 +18,7 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
   feedback = new MatTableDataSource();
   displayedColumns = [ 'type', 'priority', 'owner', 'title', 'status', 'openTime', 'closeTime', 'source', 'action' ];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  user: any = {};
 
   constructor(
     private couchService: CouchService,
@@ -28,6 +29,7 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.user = this.userService.get();
     this.getFeedback();
     this.feedback.filterPredicate = filterSpecificFields([ 'owner' ]);
   }
@@ -46,6 +48,9 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
         this.feedback.data = data.rows.map(feedback => {
           return feedback.doc;
         }).filter(fback  => {
+          if (!this.user.isUserAdmin) {
+            return fback.owner === this.user.name;
+          }
           return fback['_id'].indexOf('_design') !== 0;
         });
       }, (error) => this.message = 'There is a problem of getting data.');
@@ -112,7 +117,7 @@ export class FeedbackComponent implements OnInit, AfterViewInit {
     const messages = [];
     this.couchService.get(this.dbName + '/' + feedback.id)
       .subscribe((data) => {
-        data.messages.push({ 'message': feedback.message, 'time': Date.now(), 'user': this.userService.get().name });
+        data.messages.push({ 'message': feedback.message, 'time': Date.now(), 'user': this.user.name });
         this.couchService.put(this.dbName + '/' + data._id, {  ...data })
         .subscribe(() => {
           this.planetMessageService.showMessage('Reply success.');
