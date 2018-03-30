@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { findDocuments } from '../shared/mangoQueries';
 import { UserService } from '../shared/user.service';
 import { CouchService } from '../shared/couchdb.service';
-import { forkJoin } from 'rxjs/observable/forkJoin';
 import { map, switchMap  } from 'rxjs/operators';
-
+import { forkJoin } from 'rxjs/observable/forkJoin';
 // Main page once logged in.  At this stage is more of a placeholder.
 @Component({
   template: `
@@ -24,7 +23,6 @@ import { map, switchMap  } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
   data = { resources: [], courses: [], meetups: [] };
-  courseArray = [];
 
   constructor(
     private userService: UserService,
@@ -32,14 +30,17 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getData('resources', { linkPrefix: 'resources/view/', addId: true }).subscribe((res) => {
-      this.data.resources = res;
-    });
-    forkJoin(this.myCourse()).subscribe((res) => {
-      this.data.courses = res[0];
-    });
-    this.getData('meetups', { linkPrefix: 'meetups' }). subscribe((res) => {
-      this.data.meetups = res;
+    this.getShelf().pipe(switchMap(shelf => {
+      console.log(shelf);
+      return forkJoin([
+        this.getDataShelf('resources', shelf.docs[0].resourceIds, { linkPrefix: 'resources/view/', addId: true }),
+        this.getDataShelf('courses', shelf.docs[0].courseIds, { linkPrefix: 'courses', titleField: 'courseTitle' }),
+        this.getData('meetups', { linkPrefix: 'meetups' })
+      ]);
+    })).subscribe(dashboardItems => {
+      this.data.resources = dashboardItems[0];
+      this.data.courses = dashboardItems[1];
+      this.data.meetups = dashboardItems[2];
     });
   }
 
@@ -51,15 +52,15 @@ export class DashboardComponent implements OnInit {
       }));
     }
 
-  myCourse() {
-    return this.couchService.post(`courses/_find`,
-      findDocuments({ 'members':  {'$in': [
-        this.userService.get()._id
-        ]} }, 0 ))
-      .pipe(
-        map((resopnse => {
-          return resopnse.docs.map((item) => ({ ...item,  title: item.courseTitle, link: 'courses/view/' + item._id  }));
-        })));
+  getShelf() {
+    return this.couchService.post(`shelf/_find`, findDocuments({ '_id': this.userService.get()._id }, 0 ));
+  }
+
+  getDataShelf(db: string, shelf: string[], { linkPrefix, addId = false, titleField = 'title' }) {
+    return this.couchService.post(db + '/_find', findDocuments({ '_id': { '$in': shelf } }, 0 ))
+      .pipe(map(response => {
+        return response.docs.map((item) => ({ ...item, title: item[titleField], link: linkPrefix + (addId ? item.id : '') }));
+      }));
   }
 
 }
