@@ -12,7 +12,6 @@ import { switchMap, catchError, map, takeUntil } from 'rxjs/operators';
 import { MeetupService } from './meetups.service';
 import { Subject } from 'rxjs/Subject';
 
-
 @Component({
   templateUrl: './meetups.component.html',
   styles: [ `
@@ -22,6 +21,7 @@ import { Subject } from 'rxjs/Subject';
     }
   ` ]
 })
+
 export class MeetupsComponent implements OnInit, AfterViewInit, OnDestroy {
   meetups = new MatTableDataSource();
   displayedColumns = [ 'select', 'title' ];
@@ -30,6 +30,8 @@ export class MeetupsComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteDialog: any;
   selection = new SelectionModel(true, []);
   onDestroy$ = new Subject<void>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private couchService: CouchService,
@@ -43,15 +45,11 @@ export class MeetupsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.meetupService.meetupUpdated$.pipe(takeUntil(this.onDestroy$))
     .subscribe((meetups) => {
-      console.log("meetup", meetups)
       this.meetups.data = meetups;
     });
     this.meetupService.updateMeetup();
     this.meetups.filterPredicate = filterSpecificFields([ 'title', 'description' ]);
   }
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
     this.meetups.paginator = this.paginator;
@@ -79,11 +77,7 @@ export class MeetupsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.onDestroy$.next();
     this.onDestroy$.complete();
-}
-
-  // getMeetups() {
-  //   return this.couchService.get('meetups/_all_docs?include_docs=true');
-  // }
+  }
 
   deleteClick(meetup) {
     this.deleteDialog = this.dialog.open(DialogsPromptComponent, {
