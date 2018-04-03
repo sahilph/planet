@@ -7,11 +7,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { filterSpecificFields } from '../shared/table-helpers';
 import { UserService } from '../shared/user.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { switchMap, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { filterDropdowns, filterSpecificFields, composeFilterFunctions } from '../shared/table-helpers';
+import * as constants from './constants';
+
 @Component({
   templateUrl: './courses.component.html',
   styles: [ `
@@ -37,6 +39,19 @@ export class CoursesComponent implements OnInit, AfterViewInit {
   courseForm: FormGroup;
   readonly dbName = 'courses';
   userId = this.userService.get()._id;
+  gradeOptions: any = constants.gradeLevels;
+  subjectOptions: any = constants.subjectLevels;
+  filter = {
+    'gradeLevel': '',
+    'subjectLevel': ''
+  };
+  private _titleSearch = '';
+  get titleSearch(): string { return this._titleSearch; }
+  set titleSearch(value: string) {
+    // When setting the titleSearch, also set the courses filter
+    this.courses.filter = value ? value : this.dropdownsFill();
+    this._titleSearch = value;
+  }
 
   constructor(
     private couchService: CouchService,
@@ -51,7 +66,7 @@ export class CoursesComponent implements OnInit, AfterViewInit {
     forkJoin([ this.getCourses(), this.getAddedCourses() ]).subscribe((results) => {
       this.setupList(results[0].rows, results[1].docs[0] ? results[1].docs[0].courseIds || [] : []);
     }, (error) => console.log(error));
-    this.courses.filterPredicate = filterSpecificFields([ 'courseTitle' ]);
+    this.courses.filterPredicate = composeFilterFunctions([ filterDropdowns(this.filter), filterSpecificFields([ 'courseTitle' ]) ]);
   }
 
   getAddedCourses() {
@@ -216,16 +231,43 @@ export class CoursesComponent implements OnInit, AfterViewInit {
         this.planetMessageService.showAlert('Course added to your dashboard');
     }, (error) => (error));
   }
+
   dedupeShelfReduce(ids, id) {
     if (ids.indexOf(id) > -1) {
       return ids;
     }
     return ids.concat(id);
   }
+
   updateAddLibrary() {
     this.getAddedCourses().subscribe((res) => {
       this.setupList(this.courses.data, res.docs[0].courseIds);
     });
+  }
+
+  onFilterChange(filterValue: string, field: string) {
+    this.filter[field] = filterValue === 'All' ? '' : filterValue;
+    // Force filter to update by setting it to a space if empty
+    this.courses.filter = this.courses.filter ? this.courses.filter : ' ';
+  }
+
+  resetSearch() {
+    this.filter = {
+      'gradeLevel': '',
+      'subjectLevel': ''
+    };
+    this.titleSearch = '';
+  }
+
+  // Returns a space to fill the MatTable filter field so filtering runs for dropdowns when
+  // search text is deleted, but does not run when there are no active filters.
+  dropdownsFill() {
+    return Object.entries(this.filter).reduce((emptySpace, [ field, val ]) => {
+      if (val) {
+        return ' ';
+      }
+      return emptySpace;
+    }, '');
   }
 
 }

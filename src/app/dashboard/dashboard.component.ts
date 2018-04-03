@@ -4,6 +4,7 @@ import { UserService } from '../shared/user.service';
 import { CouchService } from '../shared/couchdb.service';
 import { map, switchMap  } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+
 // Main page once logged in.  At this stage is more of a placeholder.
 @Component({
   template: `
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
       this.data.courses = dashboardItems[1];
       this.data.meetups = dashboardItems[2];
     });
+
   }
 
   getData(db: string, { linkPrefix, addId = false, titleField = 'title' }) {
